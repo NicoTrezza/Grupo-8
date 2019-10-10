@@ -15,20 +15,19 @@ csrf = CSRFProtect(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    u = Usuario()
     titulo = "Título"
     if request.method == 'POST':
-        mail = request.form['usuario']
-        password = request.form['password']
+        mail = request.form['usuario']  # tomo el imput por name
+        password = request.form['password']  # tomo el imput por name
         print(mail)
         print(password)
 
-        #  acá necesitaría traer a el usuario para poder saber si es admgeneral
+        usuario = Usuario.autenticar(mail, password)
 
-        if u.autenticar(mail, password) is not None and not u.esAdmGeneral:
-            return redirect(url_for('menuestudiante'))
-        elif u.autenticar(mail, password) is not None and u.esAdmGeneral:
-            return redirect(url_for('menuadmin'))
+        if usuario is not None and not usuario.esAdmGeneral:
+            return redirect(url_for('menuestudiante'))  # me lleva a la vista del estudiante
+        elif usuario is not None and usuario.esAdmGeneral:
+            return redirect(url_for('menuadmin'))  # me lleva a la vista del administrador
         else:
             return redirect(url_for('error'))
     return render_template('index.html', titulo=titulo)
