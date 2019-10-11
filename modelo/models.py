@@ -33,6 +33,14 @@ class Usuario(BaseModel):
 			return None
 
 
+	@staticmethod
+	def traerPorSesion(sesion):
+		try:
+			return Usuario.get(sesion = sesion)
+		except  Usuario.DoesNotExist:
+			return None
+
+
 class Pais(BaseModel):
 	administrador = peewee.ForeignKeyField(Usuario, backref='PaisesQueAdministra')
 	nombre = peewee.CharField()
