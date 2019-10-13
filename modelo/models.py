@@ -83,6 +83,7 @@ AlumnoThroughDeferred.set_model(Alumno)
 class Examen(BaseModel):
 	curso = peewee.ForeignKeyField(Curso, backref='examenes')
 	titulo = peewee.CharField()
+	notaMinima = peewee.DecimalField()
 
 
 class Pregunta(BaseModel):
@@ -102,6 +103,7 @@ class Evaluacion(BaseModel):
 	examen = peewee.ForeignKeyField(Examen, backref='evaluaciones',null = False) #una evaluacion con examen null es para cargar notas de practicos
 	preguntas = peewee.ManyToManyField(Pregunta, backref='evaluaciones')
 	cursada = peewee.ForeignKeyField(Cursada, backref='evaluaciones')
+	fecha = peewee.DateTimeField()
 
 
 class RespuestaDelAlumno(BaseModel):
@@ -181,7 +183,7 @@ def cargarDatosDePrueba():
 	cursada.alumnos.add(alumno)
 	cursada.save()
 
-	examen = Examen.create(curso = curso, titulo = "examen 1")
+	examen = Examen.create(curso = curso, titulo = "examen 1", notaMinima = 4)
 	examen.save()
 
 
@@ -198,7 +200,7 @@ def cargarDatosDePrueba():
 	respuesta = Respuesta.create(pregunta = pregunta, texto = "120 grados centigrados", esCorrecta = False)
 	respuesta.save()
 
-	evaluacion = Evaluacion.create(examen = examen, cursada = cursada)
+	evaluacion = Evaluacion.create(examen = examen, cursada = cursada, fecha = datetime.date(2019, 10, 20))
 	evaluacion.preguntas.add(pregunta)
 	evaluacion.save()
 
