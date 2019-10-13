@@ -162,9 +162,9 @@ def crearTablas():
 def cargarDatosDePrueba():
 	admin = Usuario.create(nombre = "Cosme", apellido = "Fulanito", dni = "123", email="cosme@fulanito.com",clave="123",validacion="",sesion="" , esAdmGeneral = True)
 	admin.save()
-	profesor = Usuario.create(nombre = "profesor", apellido = "", dni = "", email="1",clave="",validacion="",sesion="")
+	profesor = Usuario.create(nombre = "profesor", apellido = "", dni = "", email="profesor@prueba.com",clave="123",validacion="",sesion="")
 	profesor.save()
-	alumno = Usuario.create(nombre = "alumno", apellido = "", dni = "", email="2",clave="",validacion="",sesion="")
+	alumno = Usuario.create(nombre = "alumno", apellido = "", dni = "", email="alumno@prueba.com",clave="123",validacion="",sesion="")
 	alumno.save()
 
 	pais = Pais.create(nombre = "Argentina",administrador = admin)
@@ -173,7 +173,7 @@ def cargarDatosDePrueba():
 	sede = Sede.create(nombre = "Sede Argentina", pais = pais,administrador = admin)
 	sede.save()
 
-	curso = Curso.create(nombre = "matematica", sede = sede)
+	curso = Curso.create(nombre = "fisica", sede = sede)
 	curso.save()
 
 	cursada = Cursada.create(curso = curso, inicio = datetime.date(2019, 10, 20))
@@ -185,11 +185,17 @@ def cargarDatosDePrueba():
 	examen.save()
 
 
-	pregunta = Pregunta.create(examen = examen, texto = "¿Que es una linea base?", esChoice = True , esVerdadera=False)
+	pregunta = Pregunta.create(examen = examen, texto = "¿A nivel del mar el agua hierve a?", esChoice = True , esVerdadera=False)
 	pregunta.save()
 
 
-	respuesta = Respuesta.create(pregunta = pregunta, texto = "ni idea", esCorrecta = True)
+	respuesta = Respuesta.create(pregunta = pregunta, texto = "100 grados centigrados", esCorrecta = True)
+	respuesta.save()
+
+	respuesta = Respuesta.create(pregunta = pregunta, texto = "80 grados centigrados", esCorrecta = False)
+	respuesta.save()
+
+	respuesta = Respuesta.create(pregunta = pregunta, texto = "120 grados centigrados", esCorrecta = False)
 	respuesta.save()
 
 	evaluacion = Evaluacion.create(examen = examen, cursada = cursada)
@@ -200,6 +206,6 @@ def cargarDatosDePrueba():
 	respuestaDelAlumno = RespuestaDelAlumno.create(alumno = alumno, evaluacion = evaluacion, respuesta = respuesta)
 	respuestaDelAlumno.save()
 
-	nota = Nota.create(alumno = alumno, evaluacion = evaluacion, nota = 10.5)
+	nota = Nota.create(alumno = alumno, evaluacion = evaluacion, nota = 9)
 	nota.save()
 
