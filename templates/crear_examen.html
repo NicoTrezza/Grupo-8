@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/crearexamen" method="post">
+    Curso:<br>
+    <select name="curso">
+        {% for curso in cursos %}
+        <option value="{{ curso.id }}">{{ curso.nombre }}</option>
+        {% endfor %}
+      </select>
+    <br>
+    Titulo:<br>
+    <input type="text" name="titulo"><br>
+    Nota minima:<br>
+    <input type="number" step="any" name="nota_minima">
+    <br><br>
+    <input type="submit" value="Submit">
+    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
+    </form> 
+
+
+</body>
+</html>

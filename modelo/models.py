@@ -175,6 +175,12 @@ def cargarDatosDePrueba():
 	sede = Sede.create(nombre = "Sede Argentina", pais = pais,administrador = admin)
 	sede.save()
 
+	curso = Curso.create(nombre = "curso 1", sede = sede)
+	curso.save()
+
+	curso = Curso.create(nombre = "curso 2", sede = sede)
+	curso.save()
+
 	curso = Curso.create(nombre = "fisica", sede = sede)
 	curso.save()
 

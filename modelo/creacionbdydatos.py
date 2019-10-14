@@ -1,4 +1,4 @@
-from modelo.models import *
+from models import *
 
 crearTablas()
 cargarDatosDePrueba()

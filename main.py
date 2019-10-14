@@ -7,6 +7,7 @@ from flask import redirect
 from flask import render_template
 from flask_wtf import CSRFProtect
 from modelo.models import *
+import sys
 
 app = Flask(__name__, template_folder="templates")
 app.secret_key = "estaeslaclavesecretadelgrupo8queobviamentenoeslamismaqueenelhosting"
@@ -49,6 +50,24 @@ def menuadmin():
 def menuestudiante():
     titulo = "Título"
     return render_template('menuestudiante.html', titulo=titulo)
+
+
+
+@app.route('/crearexamen', methods=['GET', 'POST'])
+def crearExamen():
+    cursos = Curso.select()
+    if request.method == 'GET': 
+        return render_template('crear_examen.html', cursos = cursos)
+    else:
+        curso = Curso.get(id = int(request.form['curso'] ))
+        titulo = request.form['titulo']
+        notaMinima =  float(request.form['nota_minima'])
+        examen = Examen.create(curso = curso, titulo = titulo, notaMinima = notaMinima)
+        examen.save()
+        return render_template('crear_examen.html', cursos = cursos)
+
+
+    
 
 
 if __name__ == '__main__':
