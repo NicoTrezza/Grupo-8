@@ -52,22 +52,30 @@ def menuestudiante():
     return render_template('menuestudiante.html', titulo=titulo)
 
 
+@app.route('/menuexamenes', methods=['GET', 'POST'])
+def menuexamenes():
+    titulo = "Título"
+    return render_template('admin/menuexamenes.html', titulo=titulo)
+
 
 @app.route('/crearexamen', methods=['GET', 'POST'])
 def crearExamen():
     cursos = Curso.select()
     if request.method == 'GET': 
-        return render_template('crear_examen.html', cursos = cursos)
+        return render_template('admin/crear_examen.html', cursos = cursos)
     else:
         curso = Curso.get(id = int(request.form['curso'] ))
         titulo = request.form['titulo']
         notaMinima =  float(request.form['nota_minima'])
         examen = Examen.create(curso = curso, titulo = titulo, notaMinima = notaMinima)
         examen.save()
-        return render_template('crear_examen.html', cursos = cursos)
+        return render_template('admin/crear_examen.html', cursos = cursos)
 
 
-    
+@app.route('/agregarpregunta', methods=['GET', 'POST'])
+def agregarpregunta():
+    titulo = "Título"
+    return render_template('admin/agregarpregunta.html', titulo=titulo)
 
 
 if __name__ == '__main__':
