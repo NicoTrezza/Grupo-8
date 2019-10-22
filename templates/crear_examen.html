@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    <script>
+
+
+        function agregarOpcionAselect(select,value,text)
+        {
+            var opt = document.createElement('option');
+            opt.value = value;
+            opt.appendChild( document.createTextNode(text));
+            select.appendChild(opt); 
+            
+        }
+
+        function selectTipoPreguntaOnChange(e) 
+        {
+
+            
+            var selectTipoPregunta = e.target;
+            var contenedor = selectTipoPregunta.parentNode;
+            var botonAgregarRespuesta = contenedor.lastChild;
+
+
+            if(selectTipoPregunta.selectedIndex == 2) botonAgregarRespuesta.style.display = "inline";
+            else
+            {
+
+                botonAgregarRespuesta.style.display = "none";
+
+                var nodosAEliminar = [];
+                for(var child=contenedor.childNodes[5]; child != botonAgregarRespuesta; child=child.nextSibling)
+                {
+                    nodosAEliminar.push(child);
+                   
+                }
+
+                nodosAEliminar.forEach(function(element) 
+                {
+                    element.remove();
+                });
+
+            } 
+        }
+
+        function agregarPregunta(e) 
+        {
+
+  
+
+            if( typeof agregarPregunta.idPregunta == 'undefined' ) {
+                agregarPregunta.idPregunta = 0;
+            }
+
+            var idPregunta = agregarPregunta.idPregunta++;
+
+         
+            var form = document.getElementById("form");
+
+            var contenedor = document.createElement('div');
+
+            var textoPregunta = document.createElement('input');
+            textoPregunta.type= "text";
+            textoPregunta.name = idPregunta + "-texto";
+
+            var labelTipoPregunta = document.createElement('label');
+            labelTipoPregunta.innerHTML= "Tipo:";
+
+            var selectTipoPregunta = document.createElement('select');
+            selectTipoPregunta.addEventListener("change", selectTipoPreguntaOnChange);
+            selectTipoPregunta.name = idPregunta + "-tipo";
+
+            agregarOpcionAselect(selectTipoPregunta,"verdadera","verdadera");
+            agregarOpcionAselect(selectTipoPregunta,"falsa","falsa");
+            agregarOpcionAselect(selectTipoPregunta,"choice","choice");
+
+            var botonEliminarPregunta = document.createElement('button');
+            botonEliminarPregunta.type= "button";
+            botonEliminarPregunta.innerHTML = "eliminar"
+            botonEliminarPregunta.addEventListener("click", eliminarPregunta);
+
+
+            var botonAgregarRespuesta = document.createElement('button');
+            botonAgregarRespuesta.type= "button";
+            botonAgregarRespuesta.innerHTML = "agregar respuesta"
+            botonAgregarRespuesta.style.display = "none";
+            botonAgregarRespuesta.name = idPregunta;
+            botonAgregarRespuesta.addEventListener("click", agregarRespuesta);
+
+            contenedor.appendChild(textoPregunta);
+            contenedor.appendChild(labelTipoPregunta);
+            contenedor.appendChild(selectTipoPregunta);
+            contenedor.appendChild(botonEliminarPregunta);
+            contenedor.appendChild(document.createElement('br'));
+            contenedor.appendChild(botonAgregarRespuesta);
+            form.insertBefore(contenedor,e.target);
+            
+
+        }
+
+
+
+        function agregarRespuesta(e)
+        {
+
+
+            if( typeof agregarRespuesta.idRespuesta == 'undefined' ) {
+                agregarRespuesta.idRespuesta = 0;
+            }
+
+
+            var idRespuesta = agregarRespuesta.idRespuesta++;
+            var botonAgregarRespuesta = e.target;
+            var idPregunta = botonAgregarRespuesta.name;
+            var contenedor = botonAgregarRespuesta.parentNode;
+
+
+            var textoRespuesta =  document.createElement('input');
+            textoRespuesta.type = "text";
+            textoRespuesta.name = idPregunta + "-" + idRespuesta + "-texto";
+
+            var botonEliminarRespuesta = document.createElement('button');
+            botonEliminarRespuesta.type= "button";
+            botonEliminarRespuesta.innerHTML = "eliminar"
+            botonEliminarRespuesta.addEventListener("click", eliminarRespuesta);
+
+
+            var labelRadioRespuestaCorrecta = document.createElement('label');
+            labelRadioRespuestaCorrecta.innerHTML= "correcta:";
+            
+
+            var radioRespuestaCorrecta =  document.createElement('input');
+            radioRespuestaCorrecta.type = "radio";
+            radioRespuestaCorrecta.name = idPregunta + "-correcta";
+            radioRespuestaCorrecta.value = idRespuesta;
+
+
+            contenedor.insertBefore(textoRespuesta,e.target);
+            contenedor.insertBefore(botonEliminarRespuesta,e.target);
+            contenedor.insertBefore(labelRadioRespuestaCorrecta,e.target);
+            contenedor.insertBefore(radioRespuestaCorrecta,e.target);
+            contenedor.insertBefore(document.createElement('br'),e.target);
+
+
+
+        }
+
+        function eliminarPregunta(e)
+        {
+            e.target.parentNode.remove();
+
+        }
+
+        function eliminarRespuesta(e)
+        {
+            e.target.previousSibling.remove();
+            e.target.nextSibling.remove();
+            e.target.nextSibling.remove();
+            e.target.nextSibling.remove();
+            e.target.remove();
+
+        }
+
+
+
+</script>
+
+
+
+<form action="/crearexamen" method="post" id="form">
+    Curso:<br>
+    <select name="curso">
+        {% for curso in cursos %}
+        <option value="{{ curso.id }}">{{ curso.nombre }}</option>
+        {% endfor %}
+      </select>
+    <br>
+    Titulo:<br>
+    <input type="text" name="titulo"><br>
+    Nota minima:<br>
+    <input type="number" step="any" name="nota_minima">
+    <br><br>
+
+
+    <button type="button" onclick="agregarPregunta(event)">Agregar Pregunta</button> <br>
+    <input type="submit" value="Submit">
+    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
+
+    </form> 
+
+
+</body>
+</html>

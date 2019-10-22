@@ -7,6 +7,8 @@ from flask import redirect
 from flask import render_template
 from flask_wtf import CSRFProtect
 from modelo.models import *
+from negocio.crearExamen import crearExamenGet
+from negocio.crearExamen import crearExamenPost
 import sys
 
 app = Flask(__name__, template_folder="templates")
@@ -60,16 +62,8 @@ def menuexamenes():
 
 @app.route('/crearexamen', methods=['GET', 'POST'])
 def crearExamen():
-    cursos = Curso.select()
-    if request.method == 'GET': 
-        return render_template('admin/crear_examen.html', cursos = cursos)
-    else:
-        curso = Curso.get(id = int(request.form['curso'] ))
-        titulo = request.form['titulo']
-        notaMinima =  float(request.form['nota_minima'])
-        examen = Examen.create(curso = curso, titulo = titulo, notaMinima = notaMinima)
-        examen.save()
-        return render_template('admin/crear_examen.html', cursos = cursos)
+    if request.method == 'GET': return crearExamenGet(request)
+    else: return crearExamenPost(request)
 
 
 @app.route('/agregarpregunta', methods=['GET', 'POST'])
