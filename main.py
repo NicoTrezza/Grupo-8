@@ -66,10 +66,10 @@ def crearExamen():
     else: return crearExamenPost(request)
 
 
-@app.route('/agregarpregunta', methods=['GET', 'POST'])
+@app.route('/hacer_examen', methods=['GET', 'POST'])
 def agregarpregunta():
     titulo = "Título"
-    return render_template('admin/agregarpregunta.html', titulo=titulo)
+    return render_template('estudiante/hacer_examen.html', titulo=titulo)
 
 
 if __name__ == '__main__':
