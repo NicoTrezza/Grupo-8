@@ -109,8 +109,9 @@ class Evaluacion(BaseModel):
 class RespuestaDelAlumno(BaseModel):
 	alumno = peewee.ForeignKeyField(Usuario, backref='respuestas')
 	evaluacion = peewee.ForeignKeyField(Evaluacion, backref='respuestasElegidas')
-	respuesta = peewee.ForeignKeyField(Respuesta) #ni idea que nombre poner en backref si lo necesitamos pienso uno
-
+	pregunta = peewee.ForeignKeyField(Pregunta) #ni idea que nombre poner en backref si lo necesitamos pienso uno
+	respuesta = peewee.ForeignKeyField(Respuesta, null = False) #ni idea que nombre poner en backref si lo necesitamos pienso uno
+	respondioVerdadera = peewee.BooleanField()
 
 class Nota(BaseModel):
 	evaluacion = peewee.ForeignKeyField(Evaluacion, backref='notas')
@@ -211,7 +212,7 @@ def cargarDatosDePrueba():
 	evaluacion.save()
 
 
-	respuestaDelAlumno = RespuestaDelAlumno.create(alumno = alumno, evaluacion = evaluacion, respuesta = respuesta)
+	respuestaDelAlumno = RespuestaDelAlumno.create(alumno = alumno, evaluacion = evaluacion,pregunta = pregunta , respuesta = respuesta, respondioVerdadera = False)
 	respuestaDelAlumno.save()
 
 	nota = Nota.create(alumno = alumno, evaluacion = evaluacion, nota = 9)
