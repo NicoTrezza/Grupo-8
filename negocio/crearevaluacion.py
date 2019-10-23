@@ -4,6 +4,7 @@ from flask import url_for
 from flask import redirect
 from flask import render_template
 from flask_wtf import CSRFProtect
+import dateparser
 from modelo.models import *
 from peewee import fn
 import sys
@@ -41,10 +42,12 @@ def crearEvaluacionGet(request):
 
 
 def crearEvaluacionPost(request):
-    
+
     cursada = Cursada.get(id = request.form["cursada"])
     examen = Examen.get(id = request.form["examen"])
-    evaluacion = Evaluacion.create(examen = examen,titulo = request.form["titulo"], cursada = cursada, fecha = datetime.date(2019, 10, 20))
+    titulo = request.form["titulo"]
+    fecha = dateparser.parse(request.form['fecha']).date()
+    evaluacion = Evaluacion.create(examen = examen,titulo = titulo, cursada = cursada, fecha = fecha)
     evaluacion.save()
     idsSeleccionadas = []
 
