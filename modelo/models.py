@@ -61,6 +61,7 @@ AlumnoThroughDeferred = peewee.DeferredThroughModel()
 
 class Cursada(BaseModel):
 	curso = peewee.ForeignKeyField(Curso, backref='cursadas')
+	nombre = peewee.CharField()
 	profesores = peewee.ManyToManyField(Usuario,through_model= ProfesorThroughDeferred, backref='cursadasEnLasQueEsProfesor')
 	alumnos = peewee.ManyToManyField(Usuario,through_model= AlumnoThroughDeferred, backref='cursadasEnLasQueEsAlumno')
 	inicio = peewee.DateTimeField()
@@ -103,6 +104,7 @@ class Evaluacion(BaseModel):
 	examen = peewee.ForeignKeyField(Examen, backref='evaluaciones',null = False) #una evaluacion con examen null es para cargar notas de practicos
 	preguntas = peewee.ManyToManyField(Pregunta, backref='evaluaciones')
 	cursada = peewee.ForeignKeyField(Cursada, backref='evaluaciones')
+	titulo = peewee.CharField()
 	fecha = peewee.DateTimeField()
 
 
@@ -185,7 +187,7 @@ def cargarDatosDePrueba():
 	curso = Curso.create(nombre = "fisica", sede = sede)
 	curso.save()
 
-	cursada = Cursada.create(curso = curso, inicio = datetime.date(2019, 10, 20))
+	cursada = Cursada.create(curso = curso,nombre = "cursada 1", inicio = datetime.date(2019, 10, 20))
 	cursada.profesores.add(profesor)
 	cursada.alumnos.add(alumno)
 	cursada.save()
@@ -207,7 +209,7 @@ def cargarDatosDePrueba():
 	respuesta = Respuesta.create(pregunta = pregunta, texto = "120 grados centigrados", esCorrecta = False)
 	respuesta.save()
 
-	evaluacion = Evaluacion.create(examen = examen, cursada = cursada, fecha = datetime.date(2019, 10, 20))
+	evaluacion = Evaluacion.create(examen = examen,titulo ="evaluacion 1", cursada = cursada, fecha = datetime.date(2019, 10, 20))
 	evaluacion.preguntas.add(pregunta)
 	evaluacion.save()
 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+function selectCursadaOnChange()
+{
+    var selectCursada = document.getElementById("select-cursada");
+    window.location.replace("/crearevaluacion?cursada=" + selectCursada.value);
+
+}
+function selectExamenOnchange()
+{
+    var selectCursada = document.getElementById("select-cursada");
+    var selectExamen = document.getElementById("select-examen");
+    window.location.replace("/crearevaluacion?cursada=" + selectCursada.value +"&examen="+selectExamen.value);
+
+}
+</script>
+
+
+
+
+<form action="/crearevaluacion" method="post" id="form">
+
+
+    {% if cursadas %}
+    Cursada:<br>
+    <select name="cursada" onchange="selectCursadaOnChange()" id="select-cursada">
+        {% for cursada in cursadas %}
+        <option value="{{ cursada.id }}" {% if cursada.id == idCursada %} selected {% endif %} >{{ cursada.nombre }}</option>
+        {% endfor %}
+    </select>    
+    <br>
+    {% endif %}
+    
+    
+    {% if examenes %}
+    Examen:<br>
+    <select name="examen" onchange="selectExamenOnchange()" id="select-examen">
+        {% for examen in examenes %}
+        <option value="{{ examen.id }}" {% if examen.id == idExamen %} selected {% endif %} >{{ examen.titulo }}</option>
+        {% endfor %}
+    </select>    
+    <br>
+    Titulo:<br>
+    <input type="text" name="titulo"><br>
+    {% endif %}
+
+    {% if preguntas %}
+    Examen:<br>
+    {% for pregunta in preguntas %}
+    {{ pregunta.texto }}<input type="checkbox" name="pregunta-{{ pregunta.id }}"><br>
+    {% endfor %}
+    <br>    
+    {% endif %}
+
+
+    <input type="submit" value="Submit">
+    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
+
+    </form> 
+
+</body>
+</html>

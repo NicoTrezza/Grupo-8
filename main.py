@@ -9,7 +9,12 @@ from flask_wtf import CSRFProtect
 from modelo.models import *
 from negocio.crearExamen import crearExamenGet
 from negocio.crearExamen import crearExamenPost
+from negocio.crearevaluacion import crearEvaluacionGet
+from negocio.crearevaluacion import crearEvaluacionPost
 import sys
+
+
+
 
 app = Flask(__name__, template_folder="templates")
 app.secret_key = "estaeslaclavesecretadelgrupo8queobviamentenoeslamismaqueenelhosting"
@@ -64,6 +69,12 @@ def menuexamenes():
 def crearExamen():
     if request.method == 'GET': return crearExamenGet(request)
     else: return crearExamenPost(request)
+
+
+@app.route('/crearevaluacion', methods=['GET', 'POST'])
+def crearEvaluacion():
+    if request.method == 'GET': return crearEvaluacionGet(request)
+    else: return crearEvaluacionPost(request)
 
 
 @app.route('/hacer_examen', methods=['GET', 'POST'])
