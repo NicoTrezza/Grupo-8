@@ -5,6 +5,7 @@ from flask import request
 from flask import url_for
 from flask import redirect
 from flask import render_template
+from flask import session
 from flask_wtf import CSRFProtect
 from modelo.models import *
 from negocio.crearExamen import crearExamenGet
@@ -33,12 +34,21 @@ def index():
         usuario = Usuario.autenticar(mail, password)
 
         if usuario is not None and not usuario.esAdmGeneral:
+            session['usuario'] = mail
             return redirect(url_for('menuestudiante'))  # me lleva a la vista del estudiante
         elif usuario is not None and usuario.esAdmGeneral:
+            session['usuario'] = mail
             return redirect(url_for('menuadmin'))  # me lleva a la vista del administrador
         else:
             return redirect(url_for('error'))
     return render_template('index.html', titulo=titulo)
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    if 'usuario' in session:
+        session.pop('usuario')
+    return redirect(url_for('index'))
 
 
 @app.route('/error', methods=['GET', 'POST'])
