@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form action="/resolverevaluacion?evaluacion={{idEvaluacion}}" method="post" id="form">
+
+ 
+    {% for pregunta in preguntas %}
+    {% if not pregunta.esChoice %}   
+    {{ pregunta.texto }}<input type="checkbox" name="pregunta-{{ pregunta.id }}"><br>  
+    {% else %}  
+    {{ pregunta.texto }}<br>
+    {% for respuesta in pregunta.respuestas %}
+    {{ respuesta.texto }}   <input type="radio" name="pregunta-{{ pregunta.id }}" value="{{respuesta.id}}"> <br>  
+    {% endfor %} 
+    {% endif %}
+    {% endfor %}
+    <br>    
+
+
+
+    <input type="submit" value="Submit">
+    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
+
+    </form> 
+
+</body>
+</html>

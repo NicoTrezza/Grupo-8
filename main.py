@@ -12,6 +12,8 @@ from negocio.crearExamen import crearExamenGet
 from negocio.crearExamen import crearExamenPost
 from negocio.crearevaluacion import crearEvaluacionGet
 from negocio.crearevaluacion import crearEvaluacionPost
+from negocio.resolverEvaluacion import resolverEvaluacionGet
+from negocio.resolverEvaluacion import resolverEvaluacionPost
 import sys
 
 
@@ -28,17 +30,16 @@ def index():
     if request.method == 'POST':
         mail = request.form['usuario']  # tomo el imput por name
         password = request.form['password']  # tomo el imput por name
-        print(mail)
-        print(password)
-
         usuario = Usuario.autenticar(mail, password)
 
-        if usuario is not None and not usuario.esAdmGeneral:
-            session['usuario'] = mail
-            return redirect(url_for('menuestudiante'))  # me lleva a la vista del estudiante
-        elif usuario is not None and usuario.esAdmGeneral:
-            session['usuario'] = mail
-            return redirect(url_for('menuadmin'))  # me lleva a la vista del administrador
+        if usuario is not None:
+            usuario.generarSesion()
+            session['usuario'] = usuario.sesion
+            usuario.save()
+            if(usuario.esAdmGeneral):
+                return redirect(url_for('menuadmin'))  # me lleva a la vista del estudiante
+            else:
+                return redirect(url_for('menuestudiante'))  # me lleva a la vista del administrador
         else:
             return redirect(url_for('error'))
     return render_template('index.html', titulo=titulo)
@@ -85,6 +86,13 @@ def crearExamen():
 def crearEvaluacion():
     if request.method == 'GET': return crearEvaluacionGet(request)
     else: return crearEvaluacionPost(request)
+
+
+@app.route('/resolverevaluacion', methods=['GET', 'POST'])
+def resolverEvaluacion():
+    if request.method == 'GET': return resolverEvaluacionGet(request)
+    else: return resolverEvaluacionPost(request)
+
 
 
 @app.route('/hacer_examen', methods=['GET', 'POST'])

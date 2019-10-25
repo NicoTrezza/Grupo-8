@@ -3,7 +3,8 @@
 import peewee
 import datetime
 import os
-
+import random
+import string
 
 db = peewee.SqliteDatabase(os.path.dirname(os.path.abspath(__file__))+'\\test.db')
 
@@ -32,6 +33,12 @@ class Usuario(BaseModel):
 		except  Usuario.DoesNotExist:
 			return None
 
+	def generarSesion(self):
+		sesion = ""
+		letras = string.ascii_letters + string.digits
+		for i in range(30):
+			sesion = sesion + random.choice(letras)
+		self.sesion = sesion
 
 	@staticmethod
 	def traerPorSesion(sesion):
@@ -112,7 +119,7 @@ class RespuestaDelAlumno(BaseModel):
 	alumno = peewee.ForeignKeyField(Usuario, backref='respuestas')
 	evaluacion = peewee.ForeignKeyField(Evaluacion, backref='respuestasElegidas')
 	pregunta = peewee.ForeignKeyField(Pregunta) #ni idea que nombre poner en backref si lo necesitamos pienso uno
-	respuesta = peewee.ForeignKeyField(Respuesta, null = False) #ni idea que nombre poner en backref si lo necesitamos pienso uno
+	respuesta = peewee.ForeignKeyField(Respuesta, null = True) #ni idea que nombre poner en backref si lo necesitamos pienso uno
 	respondioVerdadera = peewee.BooleanField()
 
 class Nota(BaseModel):
