@@ -73,12 +73,20 @@
             botonEliminarPregunta.type= "button";
             botonEliminarPregunta.innerHTML = "eliminar"
             botonEliminarPregunta.addEventListener("click", eliminarPregunta);
+            botonEliminarPregunta.classList.add("btn");
+            botonEliminarPregunta.classList.add("waves-effect");
+            botonEliminarPregunta.classList.add("waves-light");
+
             var botonAgregarRespuesta = document.createElement('button');
             botonAgregarRespuesta.type= "button";
             botonAgregarRespuesta.innerHTML = "agregar respuesta"
             botonAgregarRespuesta.style.display = "none";
             botonAgregarRespuesta.name = idPregunta;
             botonAgregarRespuesta.addEventListener("click", agregarRespuesta);
+            botonAgregarRespuesta.classList.add("btn");
+            botonAgregarRespuesta.classList.add("waves-effect");
+            botonAgregarRespuesta.classList.add("waves-light");
+
             contenedor.appendChild(textoPregunta);
             contenedor.appendChild(labelTipoPregunta);
             contenedor.appendChild(selectTipoPregunta);
@@ -104,19 +112,28 @@
             botonEliminarRespuesta.type= "button";
             botonEliminarRespuesta.innerHTML = "eliminar"
             botonEliminarRespuesta.addEventListener("click", eliminarRespuesta);
+            botonEliminarRespuesta.classList.add("btn");
+            botonEliminarRespuesta.classList.add("waves-effect");
+            botonEliminarRespuesta.classList.add("waves-light");
+
             var labelRadioRespuestaCorrecta = document.createElement('label');
-            labelRadioRespuestaCorrecta.innerHTML= "correcta:";
+            
+            
             
             var radioRespuestaCorrecta =  document.createElement('input');
             radioRespuestaCorrecta.type = "radio";
             radioRespuestaCorrecta.name = idPregunta + "-correcta";
             radioRespuestaCorrecta.value = idRespuesta;
-  
+
+            var spanLabelRadioRespuestaCorrecta = document.createElement('span');
+            spanLabelRadioRespuestaCorrecta.innerHTML = "correcta"
+            labelRadioRespuestaCorrecta.appendChild(radioRespuestaCorrecta);
+            labelRadioRespuestaCorrecta.appendChild(spanLabelRadioRespuestaCorrecta);
+
 
             contenedor.insertBefore(textoRespuesta,e.target);
             contenedor.insertBefore(botonEliminarRespuesta,e.target);
             contenedor.insertBefore(labelRadioRespuestaCorrecta,e.target);
-            contenedor.insertBefore(radioRespuestaCorrecta,e.target);
             contenedor.insertBefore(document.createElement('br'),e.target);
         }
         function eliminarPregunta(e)
@@ -126,7 +143,6 @@
         function eliminarRespuesta(e)
         {
             e.target.previousSibling.remove();
-            e.target.nextSibling.remove();
             e.target.nextSibling.remove();
             e.target.nextSibling.remove();
             e.target.remove();
