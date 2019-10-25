@@ -227,3 +227,26 @@ def cargarDatosDePrueba():
 	nota = Nota.create(alumno = alumno, evaluacion = evaluacion, nota = 9)
 	nota.save()
 
+
+
+def cargarDatosParaPresentar():
+	admin = Usuario.create(nombre = "Cosme", apellido = "Fulanito", dni = "123", email="cosme@fulanito.com",clave="123",validacion="",sesion="" , esAdmGeneral = True)
+	admin.save()
+	profesor = Usuario.create(nombre = "profesor", apellido = "", dni = "", email="profesor@prueba.com",clave="123",validacion="",sesion="")
+	profesor.save()
+	alumno = Usuario.create(nombre = "alumno", apellido = "", dni = "", email="alumno@prueba.com",clave="123",validacion="",sesion="")
+	alumno.save()
+
+	pais = Pais.create(nombre = "Argentina",administrador = admin)
+	pais.save()
+
+	sede = Sede.create(nombre = "Sede Argentina", pais = pais,administrador = admin)
+	sede.save()
+
+	curso = Curso.create(nombre = "curso 1", sede = sede)
+	curso.save()
+
+	cursada = Cursada.create(curso = curso,nombre = "cursada 1", inicio = datetime.date(2019, 10, 20))
+	cursada.profesores.add(profesor)
+	cursada.alumnos.add(alumno)
+	cursada.save()
