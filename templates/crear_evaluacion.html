@@ -2,72 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Royal Academy</title>
+
+    <!-- CSS  -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/estilos.css')}}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="{{url_for('static',filename='css/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
 </head>
-<body>
+<body class="blue-grey lighten-4">
 
-<script>
+    <nav>
+        <div class="nav-wrapper red darken-4">
+            <div class="col s12"></div>
+            <a href="#!" class="breadcrumb">Login</a>
+            </div>
+        </div>
+    </nav>
 
-function selectCursadaOnChange()
-{
-    var selectCursada = document.getElementById("select-cursada");
-    window.location.replace("/crearevaluacion?cursada=" + selectCursada.value);
-
-}
-function selectExamenOnchange()
-{
-    var selectCursada = document.getElementById("select-cursada");
-    var selectExamen = document.getElementById("select-examen");
-    window.location.replace("/crearevaluacion?cursada=" + selectCursada.value +"&examen="+selectExamen.value);
-
-}
-</script>
-
-
-
-
-<form action="/crearevaluacion" method="post" id="form">
-
-
-    {% if cursadas %}
-    Cursada:<br>
-    <select name="cursada" onchange="selectCursadaOnChange()" id="select-cursada">
-        {% for cursada in cursadas %}
-        <option value="{{ cursada.id }}" {% if cursada.id == idCursada %} selected {% endif %} >{{ cursada.nombre }}</option>
-        {% endfor %}
-    </select>    
-    <br>
-    {% endif %}
+    <div class="contenedor">
+        <div class="carta">
+            <div class="carta-header">
+                <section>Crear evaluacíon</section>
+            </div>
+            <div class="carta-body">
+                <form action="/crearevaluacion" method="post" id="form">
+                    <div class="grupo">
+                        {% if cursadas %}
+                        <section>Cursada:</section>
+                        <select name="cursada" onchange="selectCursadaOnChange()" id="select-cursada">
+                            <option value="" disabled selected>Seleccione un curso</option>
+                            {% for cursada in cursadas %}
+                            <option value="{{ cursada.id }}" {% if cursada.id == idCursada %} selected {% endif %} >{{ cursada.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                        {% endif %}
+                    </div>
+                    <div class="grupo">
+                        {% if examenes %}
+                        <section>Examen:</section>
+                        <select name="examen" onchange="selectExamenOnchange()" id="select-examen">
+                            <option value="" disabled selected>Seleccione un examen</option>
+                            {% for examen in examenes %}
+                            <option value="{{ examen.id }}" {% if examen.id == idExamen %} selected {% endif %} >{{ examen.titulo }}</option>
+                            {% endfor %}
+                        </select>  
+                    </div>
+                    <div class="grupo">
+                        <section>Titulo:</section>
+                        <div class="input-field col s12">
+                            <input type="text" name="titulo"><br>
+                            <label for="titulo">Ingrese el titulo</label>
+                        </div>
+                    </div>
+                    <div class="grupo">
+                        <section>Fecha:</section>
+                        <div class="input-field col s12">
+                            <input type="datetime-local" name="fecha"><br>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="grupo">
+                        {% if preguntas %}
+                        <section>Seleccione las preguntas:</section>
+                        {% for pregunta in preguntas %}
+                        <label>
+                            <input type="checkbox" class="filled-in" />
+                            <span>{{ pregunta.texto }}</span>
+                        </label><br>
+                        {% endfor %}
+                        <br> 
+                        {% endif %}
+                    </div>
+                    <input class="btn waves-effect waves-light btnsubmit" type="submit" value="Submit">
+                    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
+                </form>
+            </div>
+        </div>
+    </div>
     
-    
-    {% if examenes %}
-    Examen:<br>
-    <select name="examen" onchange="selectExamenOnchange()" id="select-examen">
-        {% for examen in examenes %}
-        <option value="{{ examen.id }}" {% if examen.id == idExamen %} selected {% endif %} >{{ examen.titulo }}</option>
-        {% endfor %}
-    </select>    
-    <br>
-    Titulo:<br>
-    <input type="text" name="titulo"><br>
-    Fecha:<br>
-    <input type="datetime-local" name="fecha"><br>
-    {% endif %}
+    <footer class="page-footer red darken-4">
+        <div class="container">
+            <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+  </footer>
 
-
-    {% if preguntas %}
-    Examen:<br>
-    {% for pregunta in preguntas %}
-    {{ pregunta.texto }}<input type="checkbox" name="pregunta-{{ pregunta.id }}"><br>
-    {% endfor %}
-    <br>    
-    {% endif %}
-
-
-    <input type="submit" value="Submit">
-    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
-
-    </form> 
-
-</body>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{{url_for('static',filename='js/materialize.js')}}"></script>
+    <script src="{{url_for('static',filename='js/funciones.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/pinzon1992/materialize_table_pagination/f9a8478f/js/pagination.js"></script>
+ </body>
 </html>

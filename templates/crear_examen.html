@@ -2,198 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Royal Academy</title>
+
+    <!-- CSS  -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/estilos.css')}}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="{{url_for('static',filename='css/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
 </head>
-<body>
+<body class="blue-grey lighten-4">
 
+    <nav>
+        <div class="nav-wrapper red darken-4">
+            <div class="col s12">
+            <a href="/" class="breadcrumb">Login</a>
+            <a href="../menuadmin" class="breadcrumb">Menu Administrador</a>
+            <a href="../menuexamenes" class="breadcrumb">Menu Examen</a>
+            <a href="../crearexamen" class="breadcrumb">Crear Examen</a>
+            </div>
+        </div>
+    </nav>
 
-    <script>
+    <div class="contenedor">
+        <div class="carta">
+            <div class="carta-header">
+                <section>Complete los datos del examen</section>
+            </div>
+            <div class="carta-body">
+                <form action="/crearexamen" method="post" id="form">
+                    <div class="grupo">
+                        <section>Curso:</section>
+                        <select name="curso">
+                            <option value="" disabled selected>Seleccione un curso</option>
+                            {% for curso in cursos %}
+                            <option value="{{ curso.id }}">{{ curso.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="grupo">
+                        <section>Título:</section>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="text" name="titulo">
+                                <label for="titulo">Ingrese el título del examen</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grupo">
+                        <section>Nota mínima:</section>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="number" step="any" name="nota_minima">
+                                <label for="titulo">Ingrese la nota mínima del examen</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn waves-effect waves-light botonAgregar" onclick="agregarPregunta(event)">Agregar Pregunta</button> <br>
+                    <input class="btn waves-effect waves-light btnsubmit" type="submit" value="Submit">
+                    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="page-footer red darken-4">
+        <div class="container">
+            <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+  </footer>
 
-
-        function agregarOpcionAselect(select,value,text)
-        {
-            var opt = document.createElement('option');
-            opt.value = value;
-            opt.appendChild( document.createTextNode(text));
-            select.appendChild(opt); 
-            
-        }
-
-        function selectTipoPreguntaOnChange(e) 
-        {
-
-            
-            var selectTipoPregunta = e.target;
-            var contenedor = selectTipoPregunta.parentNode;
-            var botonAgregarRespuesta = contenedor.lastChild;
-
-
-            if(selectTipoPregunta.selectedIndex == 2) botonAgregarRespuesta.style.display = "inline";
-            else
-            {
-
-                botonAgregarRespuesta.style.display = "none";
-
-                var nodosAEliminar = [];
-                for(var child=contenedor.childNodes[5]; child != botonAgregarRespuesta; child=child.nextSibling)
-                {
-                    nodosAEliminar.push(child);
-                   
-                }
-
-                nodosAEliminar.forEach(function(element) 
-                {
-                    element.remove();
-                });
-
-            } 
-        }
-
-        function agregarPregunta(e) 
-        {
-
-  
-
-            if( typeof agregarPregunta.idPregunta == 'undefined' ) {
-                agregarPregunta.idPregunta = 0;
-            }
-
-            var idPregunta = agregarPregunta.idPregunta++;
-
-         
-            var form = document.getElementById("form");
-
-            var contenedor = document.createElement('div');
-
-            var textoPregunta = document.createElement('input');
-            textoPregunta.type= "text";
-            textoPregunta.name = idPregunta + "-texto";
-
-            var labelTipoPregunta = document.createElement('label');
-            labelTipoPregunta.innerHTML= "Tipo:";
-
-            var selectTipoPregunta = document.createElement('select');
-            selectTipoPregunta.addEventListener("change", selectTipoPreguntaOnChange);
-            selectTipoPregunta.name = idPregunta + "-tipo";
-
-            agregarOpcionAselect(selectTipoPregunta,"verdadera","verdadera");
-            agregarOpcionAselect(selectTipoPregunta,"falsa","falsa");
-            agregarOpcionAselect(selectTipoPregunta,"choice","choice");
-
-            var botonEliminarPregunta = document.createElement('button');
-            botonEliminarPregunta.type= "button";
-            botonEliminarPregunta.innerHTML = "eliminar"
-            botonEliminarPregunta.addEventListener("click", eliminarPregunta);
-
-
-            var botonAgregarRespuesta = document.createElement('button');
-            botonAgregarRespuesta.type= "button";
-            botonAgregarRespuesta.innerHTML = "agregar respuesta"
-            botonAgregarRespuesta.style.display = "none";
-            botonAgregarRespuesta.name = idPregunta;
-            botonAgregarRespuesta.addEventListener("click", agregarRespuesta);
-
-            contenedor.appendChild(textoPregunta);
-            contenedor.appendChild(labelTipoPregunta);
-            contenedor.appendChild(selectTipoPregunta);
-            contenedor.appendChild(botonEliminarPregunta);
-            contenedor.appendChild(document.createElement('br'));
-            contenedor.appendChild(botonAgregarRespuesta);
-            form.insertBefore(contenedor,e.target);
-            
-
-        }
-
-
-
-        function agregarRespuesta(e)
-        {
-
-
-            if( typeof agregarRespuesta.idRespuesta == 'undefined' ) {
-                agregarRespuesta.idRespuesta = 0;
-            }
-
-
-            var idRespuesta = agregarRespuesta.idRespuesta++;
-            var botonAgregarRespuesta = e.target;
-            var idPregunta = botonAgregarRespuesta.name;
-            var contenedor = botonAgregarRespuesta.parentNode;
-
-
-            var textoRespuesta =  document.createElement('input');
-            textoRespuesta.type = "text";
-            textoRespuesta.name = idPregunta + "-" + idRespuesta + "-texto";
-
-            var botonEliminarRespuesta = document.createElement('button');
-            botonEliminarRespuesta.type= "button";
-            botonEliminarRespuesta.innerHTML = "eliminar"
-            botonEliminarRespuesta.addEventListener("click", eliminarRespuesta);
-
-
-            var labelRadioRespuestaCorrecta = document.createElement('label');
-            labelRadioRespuestaCorrecta.innerHTML= "correcta:";
-            
-
-            var radioRespuestaCorrecta =  document.createElement('input');
-            radioRespuestaCorrecta.type = "radio";
-            radioRespuestaCorrecta.name = idPregunta + "-correcta";
-            radioRespuestaCorrecta.value = idRespuesta;
-
-
-            contenedor.insertBefore(textoRespuesta,e.target);
-            contenedor.insertBefore(botonEliminarRespuesta,e.target);
-            contenedor.insertBefore(labelRadioRespuestaCorrecta,e.target);
-            contenedor.insertBefore(radioRespuestaCorrecta,e.target);
-            contenedor.insertBefore(document.createElement('br'),e.target);
-
-
-
-        }
-
-        function eliminarPregunta(e)
-        {
-            e.target.parentNode.remove();
-
-        }
-
-        function eliminarRespuesta(e)
-        {
-            e.target.previousSibling.remove();
-            e.target.nextSibling.remove();
-            e.target.nextSibling.remove();
-            e.target.nextSibling.remove();
-            e.target.remove();
-
-        }
-
-
-
-</script>
-
-
-
-<form action="/crearexamen" method="post" id="form">
-    Curso:<br>
-    <select name="curso">
-        {% for curso in cursos %}
-        <option value="{{ curso.id }}">{{ curso.nombre }}</option>
-        {% endfor %}
-      </select>
-    <br>
-    Titulo:<br>
-    <input type="text" name="titulo"><br>
-    Nota minima:<br>
-    <input type="number" step="any" name="nota_minima">
-    <br><br>
-
-
-    <button type="button" onclick="agregarPregunta(event)">Agregar Pregunta</button> <br>
-    <input type="submit" value="Submit">
-    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
-
-    </form> 
-
-
-</body>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{{url_for('static',filename='js/materialize.js')}}"></script>
+    <script src="{{url_for('static',filename='js/funciones.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/pinzon1992/materialize_table_pagination/f9a8478f/js/pagination.js"></script>
+ </body>
 </html>
