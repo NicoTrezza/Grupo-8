@@ -16,6 +16,27 @@
 </head>
 <body class="blue-grey lighten-4">
 
+    <script>
+        
+        
+    function selectCursadaOnChange()
+    {
+        var selectCursada = document.getElementById("select-cursada");
+        window.location.replace("/crearevaluacion?cursada=" + selectCursada.value);
+
+    }
+
+    function selectExamenOnchange()
+    {
+        var selectCursada = document.getElementById("select-cursada");
+        var selectExamen = document.getElementById("select-examen");
+        window.location.replace("/crearevaluacion?cursada=" + selectCursada.value +"&examen="+selectExamen.value);
+
+    }
+            
+    </script>
+
+
     <nav>
         <div class="nav-wrapper red darken-4">
             <div class="col s12"></div>
