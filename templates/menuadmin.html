@@ -1,67 +1,101 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-    <title>Royal Academy </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Royal Academy</title>
 
     <!-- CSS  -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/estilos.css')}}"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="{{url_for('static',filename='css/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
-    <!--  Scripts-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="js/materialize.js"></script>
-    <script src="js/init.js"></script>
 </head>
-<body>
+<body class="blue-grey lighten-4">
 
     <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo center">Logo</a>
-      <a helf="#" data-target="side-out" class="sidenav-trigger " ></a>
-        <li class="material-icons" >notifications</li>
-        <li class="material-icons" >message</li>
-        <li class="material-icons" >power_settings_new</li>
-    </div>
+        <div class="nav-wrapper red darken-4">
+            <div class="col s12">
+            <a href="/" class="breadcrumb">Login</a>
+            <a href="../menuadmin" class="breadcrumb">Menu Administrador</a>
+            </div>
+        </div>
     </nav>
 
-   <div><h1></h1> </div>
-    <section class="container">
-        <div class="row">
-            <div class="icon-preview col s6 m3" align="center">
-                <i class="material-icons dp48">class</i>
-                <div><span>Cursos</span></div>
+   <div class="contenedor">
+        <div class="carta">
+            <div class="carta-header">
+                    <section>Menu Administrador</section>
             </div>
-            <div class="icon-preview col s6 m3" align="center">
-                <i class="material-icons dp48">assignment_turned_in</i>
-                <div><a href="../menuexamenes">Examenes</a></div>
-            </div>
-            <div class="icon-preview col s6 m3" align="center">
-                <i class="material-icons dp48">today</i>
-                <div><span>Definir fechas</span></div>
-            </div>
-            <div class="icon-preview col s6 m3" align="center">
-                <i class="material-icons dp48">note_add</i>
-                <div><span>Preguntas</span></div>
-            </div>
-            <div class="icon-preview col s6 m3" align="center">
-                <i class="material-icons dp48">add</i>
-                <div><span>Cargar notas</span></div>
-            </div>
-            <div class="icon-preview col s6 m3" align="center">
-                <i class="material-icons dp48">assessment</i>
-                <div><span>Estadisticas</span></div>
-            </div>
-            <div class="icon-preview col s6 m3" align="center">
-                <i class="material-icons dp48">build</i>
-                <div><span>mantenimiento</span></div>
-            </div>
+            <div class="carta-body">
+                <section class="container">
+                    <div class="row">
+                        <div class="icon-preview col s6 m3" align="center">
+                            <i class="material-icons dp48">class</i>
+                            <div><span>Cursos</span></div>
+                        </div>
+                        <div class="icon-preview col s6 m3" align="center">
+                            <i class="material-icons dp48">assignment_turned_in</i>
+                            <div><a href="../menuexamenes">Examenes</a></div>
+                        </div>
+                        <div class="icon-preview col s6 m3" align="center">
+                            <i class="material-icons dp48">today</i>
+                            <div><span>Definir fechas</span></div>
+                        </div>
+                        <div class="icon-preview col s6 m3" align="center">
+                            <i class="material-icons dp48">note_add</i>
+                            <div><span>Preguntas</span></div>
+                        </div>
+                        <div class="icon-preview col s6 m3" align="center">
+                            <i class="material-icons dp48">add</i>
+                            <div><span>Cargar notas</span></div>
+                        </div>
+                        <div class="icon-preview col s6 m3" align="center">
+                            <i class="material-icons dp48">assessment</i>
+                            <div><span>Estadisticas</span></div>
+                        </div>
+                        <div class="icon-preview col s6 m3" align="center">
+                            <i class="material-icons dp48">build</i>
+                            <div><span>mantenimiento</span></div>
+                        </div>
 
+                    </div>
+                </section>
+                </div>
         </div>
-    </section>
-</body>
+    </div>
+
+    <footer class="pie page-footer red darken-4">
+        <div class="container">
+            <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{{url_for('static',filename='js/materialize.js')}}"></script>
+    <script src="{{url_for('static',filename='js/funciones.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/pinzon1992/materialize_table_pagination/f9a8478f/js/pagination.js"></script>
+    </body>
 </html>

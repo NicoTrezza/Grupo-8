@@ -77,4 +77,14 @@ body {
   padding-top: 40px;
   text-align: center; }
 
+.boton{
+  margin-bottom: 2%;
+  margin-top: 2%; }
+
+.pie{
+  left: 0px;
+  bottom: 0px;
+  position: fixed;
+  width: 100%; }
+
 /*# sourceMappingURL=estilos.css.map */
