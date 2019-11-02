@@ -36,6 +36,7 @@
 
                     {% for pregunta in preguntas %}
                     <div class="grupo">
+
                         {% if not pregunta.esChoice %}   
                             <label>
                                 <input type="checkbox" name="pregunta-{{ pregunta.id }}" class="filled-in" />
@@ -48,9 +49,10 @@
                             <label>
                                 <input type="radio" name="pregunta-{{ pregunta.id }}" value="{{respuesta.id}}">
                                 <span>{{ respuesta.texto }}</span>
-                            </label> 
+                            </label> <br>
                             {% endfor %} 
                         {% endif %}
+
                     </div>
                     {% endfor %}
                     <br>    

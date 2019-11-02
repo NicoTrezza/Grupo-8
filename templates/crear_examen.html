@@ -57,9 +57,19 @@
          
             var form = document.getElementById("form");
             var contenedor = document.createElement('div');
+
+            var divTextoPregunta = document.createElement('div');
             var textoPregunta = document.createElement('input');
             textoPregunta.type= "text";
             textoPregunta.name = idPregunta + "-texto";
+            var labelTextoPregunta = document.createElement('label');
+            labelTextoPregunta.innerHTML = "Texto de la pregunta";
+
+            divTextoPregunta.appendChild(textoPregunta);
+            divTextoPregunta.appendChild(labelTextoPregunta);
+            divTextoPregunta.classList.add("input-field");
+
+
             var labelTipoPregunta = document.createElement('label');
             labelTipoPregunta.innerHTML= "Tipo:";
             var selectTipoPregunta = document.createElement('select');
@@ -89,7 +99,7 @@
             botonAgregarRespuesta.classList.add("waves-light");
             botonAgregarRespuesta.classList.add("boton");
 
-            contenedor.appendChild(textoPregunta);
+            contenedor.appendChild(divTextoPregunta);
             contenedor.appendChild(labelTipoPregunta);
             contenedor.appendChild(selectTipoPregunta);
             contenedor.appendChild(botonEliminarPregunta);
@@ -107,9 +117,18 @@
             var botonAgregarRespuesta = e.target;
             var idPregunta = botonAgregarRespuesta.name;
             var contenedor = botonAgregarRespuesta.parentNode;
-            var textoRespuesta =  document.createElement('input');
-            textoRespuesta.type = "text";
+
+            var divTextoRespuesta = document.createElement('div');
+            var textoRespuesta = document.createElement('input');
+            textoRespuesta.type= "text";
             textoRespuesta.name = idPregunta + "-" + idRespuesta + "-texto";
+            var labelTextoRespuesta = document.createElement('label');
+            labelTextoRespuesta.innerHTML = "Texto de la pregunta";
+
+            divTextoRespuesta.appendChild(textoRespuesta);
+            divTextoRespuesta.appendChild(labelTextoRespuesta);
+            divTextoRespuesta.classList.add("input-field");
+
             var botonEliminarRespuesta = document.createElement('button');
             botonEliminarRespuesta.type= "button";
             botonEliminarRespuesta.innerHTML = "eliminar"
@@ -120,7 +139,6 @@
             botonEliminarRespuesta.classList.add("boton");
 
             var labelRadioRespuestaCorrecta = document.createElement('label');
-            
             
             
             var radioRespuestaCorrecta =  document.createElement('input');
@@ -134,7 +152,7 @@
             labelRadioRespuestaCorrecta.appendChild(spanLabelRadioRespuestaCorrecta);
 
 
-            contenedor.insertBefore(textoRespuesta,e.target);
+            contenedor.insertBefore(divTextoRespuesta,e.target);
             contenedor.insertBefore(botonEliminarRespuesta,e.target);
             contenedor.insertBefore(labelRadioRespuestaCorrecta,e.target);
             contenedor.insertBefore(document.createElement('br'),e.target);
