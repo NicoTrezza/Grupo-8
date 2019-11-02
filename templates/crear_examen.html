@@ -62,8 +62,10 @@
             var textoPregunta = document.createElement('input');
             textoPregunta.type= "text";
             textoPregunta.name = idPregunta + "-texto";
+            textoPregunta.id = textoPregunta.name;
             var labelTextoPregunta = document.createElement('label');
             labelTextoPregunta.innerHTML = "Texto de la pregunta";
+            labelTextoPregunta.htmlFor = textoPregunta.id; 
 
             divTextoPregunta.appendChild(textoPregunta);
             divTextoPregunta.appendChild(labelTextoPregunta);
@@ -95,8 +97,6 @@
             botonAgregarRespuesta.name = idPregunta;
             botonAgregarRespuesta.addEventListener("click", agregarRespuesta);
             botonAgregarRespuesta.classList.add("btn");
-            botonAgregarRespuesta.classList.add("waves-effect");
-            botonAgregarRespuesta.classList.add("waves-light");
             botonAgregarRespuesta.classList.add("boton");
 
             contenedor.appendChild(divTextoPregunta);
@@ -122,8 +122,10 @@
             var textoRespuesta = document.createElement('input');
             textoRespuesta.type= "text";
             textoRespuesta.name = idPregunta + "-" + idRespuesta + "-texto";
+            textoRespuesta.id = textoRespuesta.name;
             var labelTextoRespuesta = document.createElement('label');
             labelTextoRespuesta.innerHTML = "Texto de la pregunta";
+            labelTextoRespuesta.htmlFor = textoRespuesta.id;
 
             divTextoRespuesta.appendChild(textoRespuesta);
             divTextoRespuesta.appendChild(labelTextoRespuesta);
@@ -133,9 +135,8 @@
             botonEliminarRespuesta.type= "button";
             botonEliminarRespuesta.innerHTML = "eliminar"
             botonEliminarRespuesta.addEventListener("click", eliminarRespuesta);
+            botonEliminarRespuesta.dataset.nombreRadio = idPregunta + "-correcta";
             botonEliminarRespuesta.classList.add("btn");
-            botonEliminarRespuesta.classList.add("waves-effect");
-            botonEliminarRespuesta.classList.add("waves-light");
             botonEliminarRespuesta.classList.add("boton");
 
             var labelRadioRespuestaCorrecta = document.createElement('label');
@@ -145,6 +146,8 @@
             radioRespuestaCorrecta.type = "radio";
             radioRespuestaCorrecta.name = idPregunta + "-correcta";
             radioRespuestaCorrecta.value = idRespuesta;
+
+            if(document.getElementsByName(radioRespuestaCorrecta.name).length == 0) radioRespuestaCorrecta.checked=true;
 
             var spanLabelRadioRespuestaCorrecta = document.createElement('span');
             spanLabelRadioRespuestaCorrecta.innerHTML = "correcta"
@@ -163,10 +166,26 @@
         }
         function eliminarRespuesta(e)
         {
+            var nombreRadio = e.target.dataset.nombreRadio;
             e.target.previousSibling.remove();
             e.target.nextSibling.remove();
             e.target.nextSibling.remove();
             e.target.remove();
+
+            var hayUnRadioSeleccionado = false;
+            for(var i = 0; i< document.getElementsByName(nombreRadio).length; i++)
+            {
+                if(document.getElementsByName(nombreRadio)[i].checked)
+                {
+                    hayUnRadioSeleccionado = true;
+                    break;
+
+                } 
+
+            }
+
+            if(!hayUnRadioSeleccionado) document.getElementsByName(nombreRadio)[0].checked=true;   
+            
         }
 </script>
 
@@ -204,7 +223,7 @@
                         <section>Título:</section>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input type="text" name="titulo">
+                                <input type="text" name="titulo" id="titulo">
                                 <label for="titulo">Ingrese el título del examen</label>
                             </div>
                         </div>
@@ -213,12 +232,12 @@
                         <section>Nota mínima:</section>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input type="number" step="any" name="nota_minima">
-                                <label for="titulo">Ingrese la nota mínima del examen</label>
+                                <input type="number" step="any" name="nota_minima" id = "nota_minima">
+                                <label for="nota_minima">Ingrese la nota mínima del examen</label>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn waves-effect waves-light botonAgregar" onclick="agregarPregunta(event)">Agregar Pregunta</button> <br>
+                    <button type="button" class="btn botonAgregar" onclick="agregarPregunta(event)">Agregar Pregunta</button> <br>
                     <input class="btn waves-effect waves-light btnsubmit" type="submit" value="Submit">
                     <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
                 </form>
