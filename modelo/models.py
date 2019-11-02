@@ -21,9 +21,9 @@ class Usuario(BaseModel):
 	email = peewee.CharField(unique=True)
 	clave = peewee.CharField()
 	esAdmGeneral = peewee.BooleanField(default=False)
-	validacion = peewee.CharField()
+	validacion = peewee.CharField(default="")
 	validado = peewee.BooleanField(default=False)
-	sesion = peewee.CharField()
+	sesion = peewee.CharField(null = True)
 
 
 	@staticmethod
@@ -32,6 +32,13 @@ class Usuario(BaseModel):
 			return Usuario.get(email = email, clave = clave )
 		except  Usuario.DoesNotExist:
 			return None
+
+	def generarValidacion(self):
+		validacion = ""
+		letras = string.ascii_letters + string.digits
+		for i in range(30):
+			validacion = validacion + random.choice(letras)
+		self.validacion = validacion	
 
 	def generarSesion(self):
 		sesion = ""
@@ -108,7 +115,7 @@ class Respuesta(BaseModel):
 
 
 class Evaluacion(BaseModel):
-	examen = peewee.ForeignKeyField(Examen, backref='evaluaciones',null = False) #una evaluacion con examen null es para cargar notas de practicos
+	examen = peewee.ForeignKeyField(Examen, backref='evaluaciones',null = True) #una evaluacion con examen null es para cargar notas de practicos
 	preguntas = peewee.ManyToManyField(Pregunta, backref='evaluaciones')
 	cursada = peewee.ForeignKeyField(Cursada, backref='evaluaciones')
 	titulo = peewee.CharField()
@@ -172,11 +179,11 @@ def crearTablas():
 
 
 def cargarDatosDePrueba():
-	admin = Usuario.create(nombre = "Cosme", apellido = "Fulanito", dni = "123", email="cosme@fulanito.com",clave="123",validacion="",sesion="" , esAdmGeneral = True)
+	admin = Usuario.create(nombre = "Cosme", apellido = "Fulanito", dni = "123", email="cosme@fulanito.com",clave="123",validado = True , esAdmGeneral = True)
 	admin.save()
-	profesor = Usuario.create(nombre = "profesor", apellido = "", dni = "", email="profesor@prueba.com",clave="123",validacion="",sesion="")
+	profesor = Usuario.create(nombre = "profesor", apellido = "", dni = "", email="profesor@prueba.com",clave="123",validado = True)
 	profesor.save()
-	alumno = Usuario.create(nombre = "alumno", apellido = "", dni = "", email="alumno@prueba.com",clave="123",validacion="",sesion="")
+	alumno = Usuario.create(nombre = "alumno", apellido = "", dni = "", email="alumno@prueba.com",clave="123",validado = True)
 	alumno.save()
 
 	pais = Pais.create(nombre = "Argentina",administrador = admin)
@@ -230,11 +237,11 @@ def cargarDatosDePrueba():
 
 
 def cargarDatosParaPresentar():
-	admin = Usuario.create(nombre = "Cosme", apellido = "Fulanito", dni = "123", email="cosme@fulanito.com",clave="123",validacion="",sesion="" , esAdmGeneral = True)
+	admin = Usuario.create(nombre = "Cosme", apellido = "Fulanito", dni = "123", email="cosme@fulanito.com",clave="123",validado = True, esAdmGeneral = True)
 	admin.save()
-	profesor = Usuario.create(nombre = "profesor", apellido = "", dni = "", email="profesor@prueba.com",clave="123",validacion="",sesion="")
+	profesor = Usuario.create(nombre = "profesor", apellido = "", dni = "", email="profesor@prueba.com",clave="123",validado = True)
 	profesor.save()
-	alumno = Usuario.create(nombre = "alumno", apellido = "", dni = "", email="alumno@prueba.com",clave="123",validacion="",sesion="")
+	alumno = Usuario.create(nombre = "alumno", apellido = "", dni = "", email="alumno@prueba.com",clave="123",validado = True)
 	alumno.save()
 
 	pais = Pais.create(nombre = "Argentina",administrador = admin)

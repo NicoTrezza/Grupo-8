@@ -14,6 +14,9 @@ from negocio.crearevaluacion import crearEvaluacionGet
 from negocio.crearevaluacion import crearEvaluacionPost
 from negocio.resolverEvaluacion import resolverEvaluacionGet
 from negocio.resolverEvaluacion import resolverEvaluacionPost
+from negocio.alumnoABM import altaAlumnonGet
+from negocio.alumnoABM import altaAlumnonPost
+from negocio.alumnoABM import validarAlumnoGet
 import sys
 
 
@@ -99,6 +102,17 @@ def resolverEvaluacion():
 def agregarpregunta():
     titulo = "Título"
     return render_template('estudiante/hacer_examen.html', titulo=titulo)
+
+
+
+@app.route('/altaalumno', methods=['GET', 'POST'])
+def altaAlumnon():
+    if request.method == 'GET': return altaAlumnonGet(request)
+    else: return altaAlumnonPost(request)
+
+@app.route('/validaralumno', methods=['GET'])
+def validarAlumno():
+    return validarAlumnoGet(request)
 
 
 if __name__ == '__main__':
