@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Royal Academy</title>
+
+    <!-- CSS  -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/estilos.css')}}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="{{url_for('static',filename='css/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+</head>
+<body class="blue-grey lighten-4">
+
+    <nav>
+        <div class="nav-wrapper red darken-4">
+            <div class="col s12"></div>
+            <a href="/" class="breadcrumb">Login</a>
+            <a href="../menuestudiante" class="breadcrumb">Menu Estudiante</a>
+            <a href="#" class="breadcrumb">Resolver Evaluacion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="contenedor">
+        <div class="carta">
+            <div class="carta-header">
+                <section>Sedes</section>
+            </div>
+            <div class="carta-body">
+                <form action="/editareliminarsedes" method="post" id="form">
+
+                    <span class="card-title">Sedes</span>
+                    <table id="example" class="display">
+                      <thead>
+                          <tr>
+                            <th>Eliminar</th>        
+                            <th>Nombre</th>
+                            <th>Pais</th>
+                            <th>Administrador</th>
+                            <th>Nombre Administrador</th>
+                            <th>Apellido Administrador</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      {%for sede in sedes%}
+                          <tr>
+                            <td>
+                                    <input type="hidden" name="id" value={{sede.id}}>
+                                <label>
+                                        <!-- Los 2 inputs tienen que estar en la misma linea o rompen todo --> 
+                                        <input type="hidden" name="eliminar" value="0"><input type="checkbox" onclick="this.previousSibling.value = 1 - this.previousSibling.value">
+                                        <span></span>
+                                </label>
+                            </td>
+
+                            <td>
+                                <input type="text" name="nombre" value="{{sede.nombre}}" required>
+                            </td>
+
+                            <td>
+                                <select name="pais">
+                                    <option value="" disabled selected>Seleccione un pais</option>
+                                    {% for pais in paises %}
+                                    <option value="{{ pais.id }}" {% if pais.id == sede.pais.id %} selected {% endif %}>{{ pais.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+
+                            <td>
+                                <input type="text" name="administrador" value="{{sede.administrador.email}}" required>
+                            </td>
+
+                            <td>
+                                {{sede.administrador.nombre}}
+                            </td>
+
+                            <td>
+                                {{sede.administrador.apellido}}
+                            </td>
+
+
+                          </tr>
+                      {%endfor%}
+                      </tbody>
+                    </table>
+                    <br>    
+                    <input class="btn waves-effect waves-light btnsubmit" type="submit" value="Submit">
+                    <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
+                    
+                </form>
+            </div>
+        </div>
+    </div> 
+
+    
+    <footer class="page-footer red darken-4">
+        <div class="container">
+            <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="{{url_for('static',filename='js/materialize.js')}}"></script>
+  <script src="{{url_for('static',filename='js/funciones.js')}}"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/pinzon1992/materialize_table_pagination/f9a8478f/js/pagination.js"></script>
+ </body>
+</html>

@@ -23,7 +23,10 @@ from negocio.paisABM import altaPaisGet
 from negocio.paisABM import altaPaisPost
 from negocio.paisABM import editarEliminarPaisesGet
 from negocio.paisABM import editarEliminarPaisesPost
-
+from negocio.sedeABM import altaSedeGet
+from negocio.sedeABM import altaSedePost
+from negocio.sedeABM import editarEliminarSedesGet
+from negocio.sedeABM import editarEliminarSedesPost
 
 import sys
 
@@ -143,6 +146,22 @@ def altaPais():
 def editarEliminarPaises():
     if request.method == 'GET': return editarEliminarPaisesGet(request)
     else: return editarEliminarPaisesPost(request)
+
+
+
+@app.route('/altasede', methods=['GET', 'POST'])
+def altaSede():
+    if request.method == 'GET': return altaSedeGet(request)
+    else: return altaSedePost(request)
+
+
+@app.route('/editareliminarsedes', methods=['GET', 'POST'])
+def editarEliminarSedes():
+    if request.method == 'GET': return editarEliminarSedesGet(request)
+    else: return editarEliminarSedesPost(request)
+
+
+
 
 
 if __name__ == '__main__':
