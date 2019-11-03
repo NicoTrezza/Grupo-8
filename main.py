@@ -14,11 +14,17 @@ from negocio.crearevaluacion import crearEvaluacionGet
 from negocio.crearevaluacion import crearEvaluacionPost
 from negocio.resolverEvaluacion import resolverEvaluacionGet
 from negocio.resolverEvaluacion import resolverEvaluacionPost
-from negocio.alumnoABM import altaAlumnonGet
-from negocio.alumnoABM import altaAlumnonPost
+from negocio.alumnoABM import altaAlumnoGet
+from negocio.alumnoABM import altaAlumnoPost
 from negocio.alumnoABM import validarAlumnoGet
 from negocio.alumnoABM import editarEliminarAlumnosGet
 from negocio.alumnoABM import editarEliminarAlumnosPost
+from negocio.paisABM import altaPaisGet
+from negocio.paisABM import altaPaisPost
+from negocio.paisABM import editarEliminarPaisesGet
+from negocio.paisABM import editarEliminarPaisesPost
+
+
 import sys
 
 
@@ -33,10 +39,12 @@ csrf = CSRFProtect(app)
 def index():
     titulo = "Título"
     if request.method == 'POST':
+        if 'usuario' in session:
+            session.pop('usuario')
+
         mail = request.form['usuario']  # tomo el imput por name
         password = request.form['password']  # tomo el imput por name
         usuario = Usuario.autenticar(mail, password)
-
         if usuario is not None:
             if(not usuario.validado):
                 return "cuenta no validada" 
@@ -110,9 +118,9 @@ def agregarpregunta():
 
 
 @app.route('/altaalumno', methods=['GET', 'POST'])
-def altaAlumnon():
-    if request.method == 'GET': return altaAlumnonGet(request)
-    else: return altaAlumnonPost(request)
+def altaAlumno():
+    if request.method == 'GET': return altaAlumnoGet(request)
+    else: return altaAlumnoPost(request)
 
 @app.route('/validaralumno', methods=['GET'])
 def validarAlumno():
@@ -123,6 +131,18 @@ def editarEliminarAlumnos():
     if request.method == 'GET': return editarEliminarAlumnosGet(request)
     else: return editarEliminarAlumnosPost(request)
 
+
+
+@app.route('/altapais', methods=['GET', 'POST'])
+def altaPais():
+    if request.method == 'GET': return altaPaisGet(request)
+    else: return altaPaisPost(request)
+
+
+@app.route('/editareliminarpaises', methods=['GET', 'POST'])
+def editarEliminarPaises():
+    if request.method == 'GET': return editarEliminarPaisesGet(request)
+    else: return editarEliminarPaisesPost(request)
 
 
 if __name__ == '__main__':

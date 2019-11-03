@@ -13,11 +13,11 @@ import sys
 
 
 
-def altaAlumnonGet(request):
+def altaAlumnoGet(request):
     return render_template('alta_alumno.html')
 
 
-def altaAlumnonPost(request):
+def altaAlumnoPost(request):
 
     nombre = request.form["nombre"]
     apellido = request.form["apellido"]
