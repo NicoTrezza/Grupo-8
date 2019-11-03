@@ -17,6 +17,8 @@ from negocio.resolverEvaluacion import resolverEvaluacionPost
 from negocio.alumnoABM import altaAlumnonGet
 from negocio.alumnoABM import altaAlumnonPost
 from negocio.alumnoABM import validarAlumnoGet
+from negocio.alumnoABM import editarEliminarAlumnosGet
+from negocio.alumnoABM import editarEliminarAlumnosPost
 import sys
 
 
@@ -113,6 +115,12 @@ def altaAlumnon():
 @app.route('/validaralumno', methods=['GET'])
 def validarAlumno():
     return validarAlumnoGet(request)
+
+@app.route('/editareliminaralumnos', methods=['GET', 'POST'])
+def editarEliminarAlumnos():
+    if request.method == 'GET': return editarEliminarAlumnosGet(request)
+    else: return editarEliminarAlumnosPost(request)
+
 
 
 if __name__ == '__main__':

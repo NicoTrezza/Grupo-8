@@ -56,12 +56,12 @@ class Usuario(BaseModel):
 
 
 class Pais(BaseModel):
-	administrador = peewee.ForeignKeyField(Usuario, backref='PaisesQueAdministra')
+	administrador = peewee.ForeignKeyField(Usuario, backref='paisesQueAdministra')
 	nombre = peewee.CharField()
 
 
 class Sede(BaseModel):
-	administrador = peewee.ForeignKeyField(Usuario, backref='SedesQueAdministra')
+	administrador = peewee.ForeignKeyField(Usuario, backref='sedesQueAdministra')
 	pais = peewee.ForeignKeyField(Pais, backref='sedes')
 	nombre = peewee.CharField()
 
