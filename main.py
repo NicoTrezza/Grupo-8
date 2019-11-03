@@ -38,6 +38,8 @@ def index():
         usuario = Usuario.autenticar(mail, password)
 
         if usuario is not None:
+            if(not usuario.validado):
+                return "cuenta no validada" 
             usuario.generarSesion()
             session['usuario'] = usuario.sesion
             usuario.save()
