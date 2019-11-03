@@ -238,7 +238,9 @@
                         </div>
                     </div>
                     <button type="button" class="btn botonAgregar" onclick="agregarPregunta(event)">Agregar Pregunta</button> <br>
-                    <input class="btn waves-effect waves-light btnsubmit" type="submit" value="Submit">
+
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Confirmar</button>
+
                     <input type="hidden" name="csrf_token" value="{{csrf_token() }}"/>
                 </form>
             </div>
