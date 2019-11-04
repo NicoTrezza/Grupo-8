@@ -7,6 +7,7 @@ from flask_wtf import CSRFProtect
 import dateparser
 from modelo.models import *
 from peewee import fn
+from flask import session
 import sys
 
 
@@ -19,6 +20,11 @@ def crearEvaluacionGet(request):
     idCursada = 0
     preguntas = None
     examenes = None
+
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None or not usuario.esAdmGeneral):
+        return "permiso no valido"
+
 
     cursadas = Cursada.select()
     if(request.args.get("cursada") != None):

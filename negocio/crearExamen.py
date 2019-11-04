@@ -5,6 +5,7 @@ from flask import redirect
 from flask import render_template
 from flask_wtf import CSRFProtect
 from modelo.models import *
+from flask import session
 import sys
 
 
@@ -45,6 +46,9 @@ def armarRespuesta(pregunta,codigoPregunta,codigoRespuesta,form):
 
 
 def crearExamenGet(request):
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None or not usuario.esAdmGeneral):
+        return "permiso no valido"
     cursos = Curso.select()
     return render_template('crear_examen.html', cursos = cursos)
 

@@ -49,8 +49,9 @@ class Usuario(BaseModel):
 
 	@staticmethod
 	def traerPorSesion(sesion):
+		if ('usuario' not in sesion): return None
 		try:
-			return Usuario.get(sesion = sesion)
+			return Usuario.get(sesion = sesion["usuario"])
 		except  Usuario.DoesNotExist:
 			return None
 

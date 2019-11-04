@@ -9,11 +9,15 @@ import dateparser
 import flask
 from modelo.models import *
 from peewee import fn
+from flask import session
 import sys
 
 
 
 def altaAlumnoGet(request):
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None or not usuario.esAdmGeneral):
+        return "permiso no valido"
     return render_template('alta_alumno.html')
 
 
@@ -36,6 +40,10 @@ def altaAlumnoPost(request):
 
 
 def editarEliminarAlumnosGet(request):
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None or not usuario.esAdmGeneral):
+        return "permiso no valido"
+
     alumnos = Usuario.select().join(Pais,JOIN.LEFT_OUTER).where((Pais.administrador==None) & (Usuario.esAdmGeneral == False))
     return render_template('editar_eliminar_alumnos.html',alumnos = alumnos)
 

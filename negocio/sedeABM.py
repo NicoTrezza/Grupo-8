@@ -9,11 +9,17 @@ import dateparser
 import flask
 from modelo.models import *
 from peewee import fn
+from flask import session
 import sys
 
 
 
 def altaSedeGet(request):
+
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None or not usuario.esAdmGeneral):
+        return "permiso no valido"
+
     paises =  Pais.select()
     return render_template('alta_sede.html', paises = paises)
 
@@ -39,6 +45,11 @@ def altaSedePost(request):
 
 
 def editarEliminarSedesGet(request):
+
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None or not usuario.esAdmGeneral):
+        return "permiso no valido"
+
     sedes = Sede.select()
     paises = Pais.select()
     return render_template('editar_eliminar_sedes.html',sedes = sedes , paises=paises)
