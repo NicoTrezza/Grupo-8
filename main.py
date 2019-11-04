@@ -12,6 +12,7 @@ from negocio.crearExamen import crearExamenGet
 from negocio.crearExamen import crearExamenPost
 from negocio.crearevaluacion import crearEvaluacionGet
 from negocio.crearevaluacion import crearEvaluacionPost
+from negocio.resolverEvaluacion import evaluacionesPendientesGet
 from negocio.resolverEvaluacion import resolverEvaluacionGet
 from negocio.resolverEvaluacion import resolverEvaluacionPost
 from negocio.alumnoABM import altaAlumnoGet
@@ -104,6 +105,13 @@ def crearExamen():
 def crearEvaluacion():
     if request.method == 'GET': return crearEvaluacionGet(request)
     else: return crearEvaluacionPost(request)
+
+
+
+@app.route('/evaluacionespendientes', methods=['GET'])
+def evaluacionesPendientes():
+    return evaluacionesPendientesGet(request)
+
 
 
 @app.route('/resolverevaluacion', methods=['GET', 'POST'])

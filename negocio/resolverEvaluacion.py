@@ -9,6 +9,13 @@ from modelo.models import *
 from peewee import fn
 import sys
 
+
+
+def evaluacionesPendientesGet(request):
+    evaluaciones= Evaluacion.select().where(~(Evaluacion.id << Nota.select().where(Nota.alumno == 1)))
+    return render_template('evaluaciones_pendientes.html',evaluaciones = evaluaciones)
+
+
 def resolverEvaluacionGet(request):
     idEvaluacion = int(request.args.get("evaluacion"))
     evaluacion = Evaluacion.get(id = idEvaluacion)
@@ -53,6 +60,7 @@ def resolverEvaluacionPost(request):
             if(respuestaDelalumno.pregunta.esVerdadera == respuestaDelalumno.respondioVerdadera):
                 cantidadCorrectas = cantidadCorrectas + 1
 
-
+    nota = Nota.create(evaluacion = evaluacion ,alumno = alumno , nota = cantidadCorrectas)
+    nota.save()
 
     return str(cantidadCorrectas) + " respuestas correctas"
