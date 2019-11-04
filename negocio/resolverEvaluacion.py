@@ -4,6 +4,7 @@ from flask import url_for
 from flask import redirect
 from flask import render_template
 from flask_wtf import CSRFProtect
+from flask import session
 import dateparser
 from modelo.models import *
 from peewee import fn
@@ -12,13 +13,26 @@ import sys
 
 
 def evaluacionesPendientesGet(request):
-    evaluaciones= Evaluacion.select().where(~(Evaluacion.id << Nota.select().where(Nota.alumno == 1)))
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None):
+        return "permiso no valido"
+
+    evaluaciones= Evaluacion.select().where(~(Evaluacion.id << Nota.select().where(Nota.alumno == usuario)))
     return render_template('evaluaciones_pendientes.html',evaluaciones = evaluaciones)
 
 
 def resolverEvaluacionGet(request):
+    usuario = Usuario.traerPorSesion(session)
+    if(usuario == None):
+        return "permiso no valido"
+
     idEvaluacion = int(request.args.get("evaluacion"))
     evaluacion = Evaluacion.get(id = idEvaluacion)
+
+
+    if(Nota.select().where((Nota.alumno == usuario) & (Nota.evaluacion==evaluacion)).count()>0): return "evaluacion ya resuelta"
+
+
     return render_template('resolver_evaluacion.html',idEvaluacion = idEvaluacion,preguntas = evaluacion.preguntas)
 
 
