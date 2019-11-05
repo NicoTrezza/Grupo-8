@@ -120,12 +120,12 @@ def resolverEvaluacion():
     else: return resolverEvaluacionPost(request)
 
 
-
+"""
 @app.route('/hacer_examen', methods=['GET', 'POST'])
 def agregarpregunta():
     titulo = "Título"
     return render_template('estudiante/hacer_examen.html', titulo=titulo)
-
+"""
 
 
 @app.route('/altaalumno', methods=['GET', 'POST'])
