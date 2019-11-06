@@ -12,19 +12,18 @@
     <link href="{{url_for('static',filename='css/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-
 </head>
 <body class="blue-grey lighten-4">
 
 
     <nav>
         <div class="nav-wrapper red darken-4">
-            <div class="col s12"></div>
+          <div class="col s12">
+            <i class="material-icons dp48 brand-logo right" style="padding-right: 2%">exit_to_app</i>
             <a href="/" class="breadcrumb">Login</a>
-            <a href="../menuadmin" class="breadcrumb">Menu Administrador</a>
-            <a href="../menuexamenes" class="breadcrumb">Menu Examen</a>
-            <a href="../crearevaluacion" class="breadcrumb">Crear Evaluacion</a>
-            </div>
+            <a href="../menuestudiante" class="breadcrumb">Menu Estudiante</a>
+            <a href="../evaluacionespendientes" class="breadcrumb">Evaluaciones</a>
+          </div>
         </div>
     </nav>
 
@@ -41,29 +40,25 @@
         </div>
     </div>
     
-    <footer class="page-footer red darken-4">
-        <div class="container">
-            <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                </ul>
-            </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
+    <footer class="page-footer red darken-4" style="position: fixed;left: 0px;bottom: 0px;width: 100%;">
             <div class="container">
-            © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Royal Academy</h5>
+                    <p class="grey-text text-lighten-4">La empresa “Royal Academy” se dedica al dictado de cursos de gestión de proyectos a nivel mundial.</p>
+                </div>
+                <div class="col l4 offset-l2 s12" style="padding-top: 2%">
+                    <a href="http://www.facebook.com/AQUI_TU_PAGINA" target="_blank"><img alt="Siguenos en Facebook" src="https://lh6.googleusercontent.com/-CYt37hfDnQ8/T3nNydojf_I/AAAAAAAAAr0/P5OtlZxV4rk/s32/facebook32.png" width=32 height=32  /></a>
+                    <a href="http://twitter.com/AQUI_TU_USUARIO" target="_blank"><img src="https://lh6.googleusercontent.com/--aIk2uBwEKM/T3nN1x09jBI/AAAAAAAAAs8/qzDsbw3kEm8/s32/twitter32.png" width=32 height=32 alt="Síguenos en Twitter" /></a>
+                </div>
+                </div>
             </div>
-        </div>
-  </footer>
+            <div class="footer-copyright">
+                <div class="container">
+                © 2014 Copyright Text
+                </div>
+            </div>
+    </footer>
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
