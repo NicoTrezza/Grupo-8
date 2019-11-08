@@ -39,7 +39,11 @@ def resolverEvaluacionGet(request):
 def resolverEvaluacionPost(request): 
     idEvaluacion = int(request.args.get("evaluacion"))
     evaluacion = Evaluacion.get(id = idEvaluacion)
-    alumno = Usuario.get(id=1) #a modo de prueba de momento
+
+    alumno = Usuario.traerPorSesion(session)
+    if(alumno == None):
+        return "permiso no valido"
+
     preguntasQueRespondioVerdaderas = []
 
     for item in request.form.items():
@@ -63,7 +67,7 @@ def resolverEvaluacionPost(request):
 
     ############ CALIFICACION SEGURO DESPUES VA EN OTRA VISTA ############
 
-    respuestaDelAlumno = RespuestaDelAlumno.select().where(RespuestaDelAlumno.evaluacion == evaluacion & RespuestaDelAlumno.alumno == alumno)
+    respuestaDelAlumno = RespuestaDelAlumno.select().where((RespuestaDelAlumno.evaluacion == evaluacion) & (RespuestaDelAlumno.alumno == alumno))
 
     cantidadCorrectas  = 0
     for respuestaDelalumno in respuestaDelAlumno:
